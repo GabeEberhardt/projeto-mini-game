@@ -1,0 +1,120 @@
+@charset "UTF-8";
+
+/* Fundo do jogo */
+body {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #87ceeb, #b0e0e6);
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  user-select: none; /* Impede seleção acidental de texto */
+}
+
+/* Nuvens fixas no topo */
+.nuvem, .nuvem2 {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.7;
+}
+.nuvem {
+  width: 180px;
+  height: 50px;
+  top: 40px;
+  left: 80px;
+  box-shadow: 60px 0 0 15px white, 120px 10px 0 25px white;
+}
+.nuvem2 {
+  width: 160px;
+  height: 45px;
+  top: 130px;
+  right: 60px;
+  box-shadow: 50px 0 0 15px white, 100px 5px 0 20px white;
+  opacity: 0.5;
+}
+
+/* Telas inicial e final */
+#tela-inicial, #tela-fim {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Botões */
+button {
+  background-color: #ff5e5e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+button:hover {
+  background-color: #ff3030;
+}
+
+/* Pontuação */
+#pontuacao {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  display: none;
+}
+
+/* Balões */
+.balao {
+  position: absolute;
+  bottom: -100px;
+  width: 60px;
+  height: 80px;
+  border-radius: 50% 50% 45% 45%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
+  transition: transform 0.1s, opacity 0.3s;
+}
+
+/* Reflexo */
+.balao::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+}
+
+/* Cordinha */
+.corda {
+  width: 2px;
+  height: 35px;
+  background: linear-gradient(to bottom, #444, #999);
+  border-radius: 2px;
+  position: relative;
+  bottom: -12px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .balao { width: 45px; height: 60px; }
+  .corda { height: 25px; }
+  h1 { font-size: 22px; }
+  button { font-size: 16px; padding: 8px 16px; }
+}
