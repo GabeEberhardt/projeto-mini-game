@@ -70,6 +70,10 @@ function criarBalao() {
   });
 }
 
+let recorde = 0;
+const recordeEl = document.getElementById('recorde');
+const novoRecordeEl = document.getElementById('novo-recorde');
+
 let vidas = 3;
 let vidasPerdidas = 0;
 const vidasEl = document.getElementById('vidas');
@@ -136,6 +140,7 @@ function iniciarJogo() {
   pontuacaoEl.style.display = 'block';
   telaInicial.style.display = 'none';
   telaFim.style.display = 'none';
+  novoRecordeEl.style.display = 'none'; // ← adicionado
   intervaloBaloes = setInterval(criarBalao, 1000);
   iniciarNuvens();
 }
@@ -150,6 +155,22 @@ function fimDeJogo() {
   resultado.textContent = `Você estourou ${pontuacao} balões!`;
   pontuacaoEl.style.display = 'none';
   vidasEl.style.display = 'none';
+
+  const bateuRecorde = pontuacao > recorde;
+  if (bateuRecorde) {
+    recorde = pontuacao;
+  }
+  recordeEl.textContent = `Recorde: ${recorde} balões`;
+
+  if (bateuRecorde && pontuacao > 0) {
+    novoRecordeEl.style.display = 'block';
+    setTimeout(() => {
+      const rect = novoRecordeEl.getBoundingClientRect();
+      criarExplosao(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    }, 100);
+  } else {
+    novoRecordeEl.style.display = 'none';
+  }
 }
 
 // Botões
