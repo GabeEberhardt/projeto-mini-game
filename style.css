@@ -36,6 +36,27 @@ body {
   opacity: 0.5;
 }
 
+.nuvem-movel {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.6;
+  display: none; /* controlado via JS, some na tela inicial */
+}
+#nuvem-m1 {
+  width: 150px;
+  height: 45px;
+  top: 90px;
+  box-shadow: 55px 0 0 15px white, 110px 8px 0 20px white;
+}
+#nuvem-m2 {
+  width: 130px;
+  height: 40px;
+  top: 190px;
+  opacity: 0.45;
+  box-shadow: 45px 0 0 12px white, 90px 6px 0 18px white;
+}
+
 .moldura-topo, .moldura-baixo {
   position: absolute;
   left: 0;

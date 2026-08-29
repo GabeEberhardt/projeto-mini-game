@@ -69,6 +69,40 @@ function criarBalao() {
   });
 }
 
+let intervaloNuvens;
+const nuvemM1 = document.getElementById('nuvem-m1');
+const nuvemM2 = document.getElementById('nuvem-m2');
+let posNuvem1, posNuvem2;
+const velNuvem1 = 0.4; // px por tick, esquerda → direita
+const velNuvem2 = 0.9; // px por tick, direita → esquerda
+const larguraNuvem2 = 130; // precisa saber a largura pra calcular o wrap corretamente
+
+function iniciarNuvens() {
+  posNuvem1 = -200;
+  posNuvem2 = larguraTela + 50;
+  nuvemM1.style.display = 'block';
+  nuvemM2.style.display = 'block';
+  nuvemM1.style.left = posNuvem1 + 'px';
+  nuvemM2.style.left = posNuvem2 + 'px';
+
+ intervaloNuvens = setInterval(() => {
+  posNuvem1 += velNuvem1;
+  posNuvem2 -= velNuvem2;
+
+  if (posNuvem1 > larguraTela) posNuvem1 = -200;
+  if (posNuvem2 < -larguraNuvem2) posNuvem2 = larguraTela + 50; // nome corrigido + condição corrigida
+
+  nuvemM1.style.left = posNuvem1 + 'px';
+  nuvemM2.style.left = posNuvem2 + 'px';
+}, 20);
+}
+
+function pararNuvens() {
+  clearInterval(intervaloNuvens);
+  nuvemM1.style.display = 'none';
+  nuvemM2.style.display = 'none';
+}
+
 // Inicia o jogo
 function iniciarJogo() {
   pontuacao = 0;
@@ -79,12 +113,14 @@ function iniciarJogo() {
   telaInicial.style.display = 'none';
   telaFim.style.display = 'none';
   intervaloBaloes = setInterval(criarBalao, 1000);
+  iniciarNuvens();
 }
 
 // Finaliza o jogo
 function fimDeJogo() {
   jogoAtivo = false;
   clearInterval(intervaloBaloes);
+   pararNuvens();
   document.querySelectorAll('.balao').forEach(b => b.remove());
   telaFim.style.display = 'block';
   resultado.textContent = `Você estourou ${pontuacao} balões!`;
