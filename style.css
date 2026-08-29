@@ -36,8 +36,54 @@ body {
   opacity: 0.5;
 }
 
-/* Telas inicial e final */
-#tela-inicial, #tela-fim {
+.moldura-topo, .moldura-baixo {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 15;
+  background: repeating-linear-gradient(45deg,#6b3f1d,
+    #6b3f1d 20px,
+    #5a3216 20px,
+    #5a3216 40px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.moldura-topo { top: 0; border-bottom: 4px solid #3d220c;}
+.moldura-baixo { bottom: 0; border-top: 4px solid #3d220c;}
+
+/*Tela inicial */
+#tela-inicial {
+  position: fixed;
+  inset: 0;
+  background-image: url('imagens/estoura-balao.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 10;
+}
+
+#tela-inicial .instrucao {
+  position: absolute;
+  top: 74%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 16px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  z-index: 12;
+}
+
+#tela-inicial #btn-jogar {
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* Tela final */
+#tela-fim {
   position: absolute;
   background: rgba(255, 255, 255, 0.9);
   padding: 30px;
@@ -48,17 +94,42 @@ body {
 
 /* Botões */
 button {
-  background-color: #ff5e5e;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 18px;
-  color: white;
+  background: linear-gradient(180deg, #ffb84d, #ff8c1a);
+  border: 3px solid #7a3e0a;
+  padding: 14px 36px;
+  border-radius: 10px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #3d220c;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
   cursor: pointer;
-  transition: background-color 0.3s;
+  box-shadow: 0 4px 0 #7a3e0a, 0 6px 12px rgba(0,0,0,0.4);
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 button:hover {
-  background-color: #ff3030;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #7a3e0a, 0 8px 16px rgba(0,0,0,0.5);
+}
+button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #7a3e0a, 0 3px 6px rgba(0,0,0,0.4);
+}
+
+.particula {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 30;
+  animation: explodir 0.4s ease-out forwards;
+}
+
+@keyframes explodir {
+  to {
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
 }
 
 /* Pontuação */
@@ -72,6 +143,7 @@ button:hover {
   font-size: 18px;
   font-weight: bold;
   display: none;
+  z-index: 20;
 }
 
 /* Balões */

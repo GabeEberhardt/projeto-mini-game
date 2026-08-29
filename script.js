@@ -92,5 +92,28 @@ function fimDeJogo() {
 }
 
 // Botões
-document.getElementById('btn-jogar').addEventListener('click', iniciarJogo);
+function criarExplosao(x, y) {
+  const cores = ['#ff5e5e', '#ffb84d', '#4dd0e1', '#81c784', '#ba68c8'];
+  for (let i = 0; i < 12; i++) {
+    const particula = document.createElement('div');
+    particula.classList.add('particula');
+    particula.style.background = cores[Math.floor(Math.random() * cores.length)];
+    particula.style.left = x + 'px';
+    particula.style.top = y + 'px';
+
+    const angulo = (Math.PI * 2 * i) / 12;
+    const distancia = 60 + Math.random() * 30;
+    particula.style.setProperty('--dx', Math.cos(angulo) * distancia + 'px');
+    particula.style.setProperty('--dy', Math.sin(angulo) * distancia + 'px');
+
+    document.body.appendChild(particula);
+    setTimeout(() => particula.remove(), 400);
+  }
+}
+
+document.getElementById('btn-jogar').addEventListener('click', (e) => {
+  const rect = e.target.getBoundingClientRect();
+  criarExplosao(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  setTimeout(iniciarJogo, 200);
+});
 document.getElementById('btn-reiniciar').addEventListener('click', iniciarJogo);
