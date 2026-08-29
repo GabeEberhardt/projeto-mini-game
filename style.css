@@ -167,6 +167,65 @@ button:active {
   z-index: 20;
 }
 
+/* Vidas */
+#vidas {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  display: none;
+  z-index: 20;
+  gap: 4px;
+}
+.coracao {
+  position: relative;
+  width: 22px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 4px;
+}
+.coracao::before,
+.coracao::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 19px;
+  background: #ff4d6d;
+  border-radius: 12px 12px 0 0;
+}
+.coracao::before {
+  left: 11px;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+.coracao::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+/* Coração partido */
+.coracao.partido::before {
+  animation: quebrarDireita 0.5s ease forwards;
+}
+.coracao.partido::after {
+  animation: quebrarEsquerda 0.5s ease forwards;
+}
+@keyframes quebrarDireita {
+  to {
+    transform: rotate(-25deg) translate(5px, 12px);
+    opacity: 0;
+    background: #999;
+  }
+}
+@keyframes quebrarEsquerda {
+  to {
+    transform: rotate(65deg) translate(-5px, 12px);
+    opacity: 0;
+    background: #999;
+  }
+}
+
 /* Balões */
 .balao {
   position: absolute;

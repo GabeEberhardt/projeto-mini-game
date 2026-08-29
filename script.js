@@ -48,7 +48,8 @@ function criarBalao() {
 
     if (posicao < -100) {
       clearInterval(subir);
-      fimDeJogo();
+      balao.remove();
+      perderVida();
     } else {
       posicao -= velocidade;
       balao.style.bottom = posicao + 'px';
@@ -67,6 +68,25 @@ function criarBalao() {
       velocidadeBase += 0.5;
     }
   });
+}
+
+let vidas = 3;
+let vidasPerdidas = 0;
+const vidasEl = document.getElementById('vidas');
+const coracoes = [
+  document.getElementById('coracao1'),
+  document.getElementById('coracao2'),
+  document.getElementById('coracao3')
+];
+
+function perderVida() {
+  if (!jogoAtivo) return;
+  coracoes[vidasPerdidas].classList.add('partido');
+  vidasPerdidas++;
+  vidas--;
+  if (vidas <= 0) {
+    fimDeJogo();
+  }
 }
 
 let intervaloNuvens;
@@ -108,6 +128,10 @@ function iniciarJogo() {
   pontuacao = 0;
   velocidadeBase = 1;
   jogoAtivo = true;
+  vidas = 3;
+  vidasPerdidas = 0;
+  coracoes.forEach(c => c.classList.remove('partido'));
+  vidasEl.style.display = 'flex';
   pontuacaoEl.textContent = 'Pontuação: 0';
   pontuacaoEl.style.display = 'block';
   telaInicial.style.display = 'none';
@@ -120,11 +144,12 @@ function iniciarJogo() {
 function fimDeJogo() {
   jogoAtivo = false;
   clearInterval(intervaloBaloes);
-   pararNuvens();
+  pararNuvens();
   document.querySelectorAll('.balao').forEach(b => b.remove());
   telaFim.style.display = 'block';
   resultado.textContent = `Você estourou ${pontuacao} balões!`;
   pontuacaoEl.style.display = 'none';
+  vidasEl.style.display = 'none';
 }
 
 // Botões
