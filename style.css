@@ -1,98 +1,121 @@
 @charset "UTF-8";
 
-/* Fundo do jogo */
+/* ==========================================================================
+   1. BASE / RESET
+   ========================================================================== */
+
 body {
   margin: 0;
   overflow: hidden;
-  background: linear-gradient(to bottom, #87ceeb, #b0e0e6);
-  font-family: Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  user-select: none; /* Impede seleção acidental de texto */
+  background: linear-gradient(to bottom, #87ceeb, #b0e0e6);
+  font-family: Arial, sans-serif;
+  user-select: none; /* impede seleção acidental de texto */
 }
 
-/* Nuvens fixas no topo */
-.nuvem, .nuvem2 {
+
+/* ==========================================================================
+   2. CENÁRIO DE FUNDO — NUVENS
+   ========================================================================== */
+
+/* Nuvens fixas no topo (decorativas, sempre visíveis) */
+.nuvem,
+.nuvem2 {
   position: absolute;
   background: white;
   border-radius: 50px;
   opacity: 0.7;
 }
+
 .nuvem {
-  width: 180px;
-  height: 50px;
   top: 40px;
   left: 80px;
+  width: 180px;
+  height: 50px;
   box-shadow: 60px 0 0 15px white, 120px 10px 0 25px white;
 }
+
 .nuvem2 {
-  width: 160px;
-  height: 45px;
   top: 130px;
   right: 60px;
-  box-shadow: 50px 0 0 15px white, 100px 5px 0 20px white;
+  width: 160px;
+  height: 45px;
   opacity: 0.5;
+  box-shadow: 50px 0 0 15px white, 100px 5px 0 20px white;
 }
 
+/* Nuvens móveis (controladas via JS, ativas apenas durante o jogo) */
 .nuvem-movel {
   position: absolute;
+  display: none;
   background: white;
   border-radius: 50px;
   opacity: 0.6;
-  display: none; /* controlado via JS, some na tela inicial */
 }
+
 #nuvem-m1 {
+  top: 90px;
   width: 150px;
   height: 45px;
-  top: 90px;
   box-shadow: 55px 0 0 15px white, 110px 8px 0 20px white;
 }
+
 #nuvem-m2 {
+  top: 190px;
   width: 130px;
   height: 40px;
-  top: 190px;
   opacity: 0.45;
   box-shadow: 45px 0 0 12px white, 90px 6px 0 18px white;
 }
 
-.moldura-topo, .moldura-baixo {
+
+/* ==========================================================================
+   3. MOLDURA DECORATIVA (topo/base, usada na tela inicial)
+   ========================================================================== */
+
+.moldura-topo,
+.moldura-baixo {
   position: absolute;
   left: 0;
+  z-index: 15;
   width: 100%;
   height: 60px;
-  z-index: 15;
-  background: repeating-linear-gradient(45deg,#6b3f1d,
+  background: repeating-linear-gradient(
+    45deg,
+    #6b3f1d,
     #6b3f1d 20px,
     #5a3216 20px,
-    #5a3216 40px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    #5a3216 40px
+  );
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.moldura-topo { top: 0; border-bottom: 4px solid #3d220c;}
-.moldura-baixo { bottom: 0; border-top: 4px solid #3d220c;}
+.moldura-topo {
+  top: 0;
+  border-bottom: 4px solid #3d220c;
+}
 
-/*Tela inicial */
+.moldura-baixo {
+  bottom: 0;
+  border-top: 4px solid #3d220c;
+}
+
+
+/* ==========================================================================
+   4. TELA INICIAL
+   ========================================================================== */
+
 #tela-inicial {
   position: fixed;
   inset: 0;
-  background-image: url('imagens/estoura-balao.jpg');
+  z-index: 10;
+  background-image: url('imagens/tela-inicio-de-jogo.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: 10;
-}
-
-#tela-inicial .instrucao {
-  position: absolute;
-  top: 74%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 16px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  z-index: 12;
 }
 
 #tela-inicial #btn-jogar {
@@ -102,103 +125,113 @@ body {
   transform: translate(-50%, -50%);
 }
 
+#tela-inicial .instrucao {
+  position: absolute;
+  top: 74%;
+  left: 50%;
+  z-index: 12;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
 
-/* Tela final */
+
+/* ==========================================================================
+   5. TELA DE FIM DE JOGO
+   ========================================================================== */
+
 #tela-fim {
   position: absolute;
-  background: rgba(255, 255, 255, 0.9);
   padding: 30px;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 12px;
-  text-align: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
-/* Botões */
+
+/* ==========================================================================
+   6. BOTÕES (estilo base, reutilizado em #btn-jogar e #btn-reiniciar)
+   ========================================================================== */
+
 button {
+  padding: 14px 36px;
   background: linear-gradient(180deg, #ffb84d, #ff8c1a);
   border: 3px solid #7a3e0a;
-  padding: 14px 36px;
   border-radius: 10px;
+  box-shadow: 0 4px 0 #7a3e0a, 0 6px 12px rgba(0, 0, 0, 0.4);
+  color: #3d220c;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
   font-size: 22px;
   font-weight: bold;
-  color: #3d220c;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
   cursor: pointer;
-  box-shadow: 0 4px 0 #7a3e0a, 0 6px 12px rgba(0,0,0,0.4);
   transition: transform 0.15s, box-shadow 0.15s;
 }
+
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 #7a3e0a, 0 8px 16px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 0 #7a3e0a, 0 8px 16px rgba(0, 0, 0, 0.5);
 }
+
 button:active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 #7a3e0a, 0 3px 6px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 0 #7a3e0a, 0 3px 6px rgba(0, 0, 0, 0.4);
 }
 
-.particula {
-  position: fixed;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 30;
-  animation: explodir 0.4s ease-out forwards;
-}
 
-@keyframes explodir {
-  to {
-    transform: translate(var(--dx), var(--dy)) scale(0);
-    opacity: 0;
-  }
-}
+/* ==========================================================================
+   7. HUD — PONTUAÇÃO E VIDAS
+   ========================================================================== */
 
-/* Pontuação */
 #pontuacao {
   position: absolute;
   top: 10px;
   left: 10px;
-  background: rgba(255, 255, 255, 0.8);
+  z-index: 20;
+  display: none;
   padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   font-size: 18px;
   font-weight: bold;
-  display: none;
-  z-index: 20;
 }
 
 #recorde {
-  font-size: 15px;
-  color: #555;
   margin-top: -8px;
-}
-#novo-recorde {
-  font-size: 18px;
-  font-weight: bold;
-  color: #ff8c1a;
-  animation: pulsar 0.6s ease-in-out infinite alternate;
-}
-@keyframes pulsar {
-  from { transform: scale(1); }
-  to { transform: scale(1.1); }
+  color: #555;
+  font-size: 15px;
 }
 
-/* Vidas */
+#novo-recorde {
+  color: #ff8c1a;
+  font-size: 18px;
+  font-weight: bold;
+  animation: pulsar 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes pulsar {
+  from { transform: scale(1); }
+  to   { transform: scale(1.1); }
+}
+
 #vidas {
   position: absolute;
   top: 60px;
   left: 10px;
-  display: none;
   z-index: 20;
+  display: none;
   gap: 4px;
 }
+
 .coracao {
   position: relative;
+  display: inline-block;
   width: 22px;
   height: 20px;
-  display: inline-block;
   margin-right: 4px;
 }
+
 .coracao::before,
 .coracao::after {
   content: '';
@@ -209,55 +242,64 @@ button:active {
   background: #ff4d6d;
   border-radius: 12px 12px 0 0;
 }
+
 .coracao::before {
   left: 11px;
   transform: rotate(-45deg);
   transform-origin: 0 100%;
 }
+
 .coracao::after {
   left: 0;
   transform: rotate(45deg);
   transform-origin: 100% 100%;
 }
 
-/* Coração partido */
+/* Coração partido (perda de vida) */
 .coracao.partido::before {
   animation: quebrarDireita 0.5s ease forwards;
 }
+
 .coracao.partido::after {
   animation: quebrarEsquerda 0.5s ease forwards;
 }
+
 @keyframes quebrarDireita {
   to {
     transform: rotate(-25deg) translate(5px, 12px);
-    opacity: 0;
     background: #999;
+    opacity: 0;
   }
 }
+
 @keyframes quebrarEsquerda {
   to {
     transform: rotate(65deg) translate(-5px, 12px);
-    opacity: 0;
     background: #999;
+    opacity: 0;
   }
 }
 
-/* Balões */
+
+/* ==========================================================================
+   8. BALÕES
+   ========================================================================== */
+
 .balao {
   position: absolute;
   bottom: -100px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   width: 60px;
   height: 80px;
   border-radius: 50% 50% 45% 45%;
+  box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
   transition: transform 0.1s, opacity 0.3s;
 }
 
-/* Reflexo */
+/* Reflexo de luz */
 .balao::before {
   content: '';
   position: absolute;
@@ -265,24 +307,63 @@ button:active {
   left: 15px;
   width: 30px;
   height: 30px;
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 50%;
-  background: rgba(255,255,255,0.4);
 }
 
 /* Cordinha */
 .corda {
+  position: relative;
+  bottom: -12px;
   width: 2px;
   height: 35px;
   background: linear-gradient(to bottom, #444, #999);
   border-radius: 2px;
-  position: relative;
-  bottom: -12px;
 }
 
-/* Responsividade */
+
+/* ==========================================================================
+   9. PARTÍCULAS DE EXPLOSÃO
+   ========================================================================== */
+
+.particula {
+  position: fixed;
+  z-index: 30;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: explodir 0.4s ease-out forwards;
+}
+
+@keyframes explodir {
+  to {
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
+}
+
+
+/* ==========================================================================
+   10. RESPONSIVIDADE GERAL (jogo em andamento)
+   ========================================================================== */
+
 @media (max-width: 768px) {
-  .balao { width: 45px; height: 60px; }
-  .corda { height: 25px; }
-  h1 { font-size: 22px; }
-  button { font-size: 16px; padding: 8px 16px; }
+  .balao {
+    width: 45px;
+    height: 60px;
+  }
+
+  .corda {
+    height: 25px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 16px;
+  }
 }
