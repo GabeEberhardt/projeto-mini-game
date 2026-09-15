@@ -21,8 +21,6 @@
 
   <!-- Tela inicial -->
   <div id="tela-inicial">
-    <div class="moldura-topo"></div>
-    <div class="moldura-baixo"></div>
     <button id="btn-jogar">Começar</button>
     <p class="instrucao">Clique no botão acima para iniciar</p>
   </div>
@@ -39,10 +37,12 @@
 
   <!-- Tela de fim de jogo -->
   <div id="tela-fim" style="display:none;">
-    <h1>Fim de jogo!</h1>
-    <p id="resultado"></p>
-    <p id="recorde"></p>
-    <p id="novo-recorde" style="display:none;">🎉 Novo recorde! 🎉</p>
+    <div class="painel-fim">
+      <h1>Fim de jogo!</h1>
+      <p id="resultado"></p>
+      <p id="recorde"></p>
+      <p id="novo-recorde" style="display:none;">🎉 Novo recorde! 🎉</p>
+    </div>
     <button id="btn-reiniciar">Jogar novamente</button>
   </div>
 
