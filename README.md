@@ -30,7 +30,7 @@ A cada 5 balões estourados, a velocidade aumenta.
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/GabeEberhardt/NOME-DO-REPOSITORIO.git
+   git clone https://github.com/GabeEberhardt/projeto-mini-game.git
    ```
 2. Abra o arquivo `index.html` no navegador.
 
